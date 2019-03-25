@@ -5,6 +5,8 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.pipeline import FeatureUnion
 
+from sklearn.model_selection import cross_validate
+
 
 try:
     from sklearn.impute import SimpleImputer # Scikit-Learn 0.20+
@@ -94,12 +96,16 @@ from sklearn import tree
 
 
 decision_tree = tree.DecisionTreeClassifier()
-decision_tree .fit(X_train, y_train)
+
+cv_results = cross_validate(decision_tree, X_train, y_train, cv=5, return_train_score=True)
 
 
-X_test = preprocess_pipeline.transform(test_data)
-y_pred = decision_tree.predict(X_test)
+# decision_tree.fit(X_train, y_train)
+
+
+# X_test = preprocess_pipeline.transform(test_data)
+# y_pred = decision_tree.predict(X_test)
 
 
 
-
+print (cv_results)
